@@ -1,0 +1,44 @@
+---
+title: "4432_hw3"
+author: "ZHANG Weiwen" "wzhangbu@connect.ust.hk" "20583632"
+date: "2020/12/7"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(gbm)
+source("./adaboost.R")  # implement your own adaboost here
+niter <- 1000 # number of trees to grow in adaboost
+
+# read training data
+data_train <- read.table("./data_train.txt",header = T)
+y <- data_train$y
+x <- data.matrix(data_train[,-1])
+
+# read testing data
+data_test <- read.table("./data_test.txt",header = T)
+hold.out.y <- data_test$y
+hold.out.x <- data.matrix(data_test[,-1])
+
+```
+
+
+
+```{r}
+fit_adaboost <- adaboost(x,y,hold.out.x,m = niter,treedepth = 1)
+yh_adaboost <- predict(fit_adaboost,hold.out.x)
+plot(colMeans(yh_adaboost$prediction!=hold.out.y),type="l",xlab = "Iterations (trees)",ylab="Misclassification reate")
+# misclassification rate of the final model
+mean(yh_adaboost$prediction[,niter]!=hold.out.y)
+# misclassification rate of the best model
+min(colMeans(yh_adaboost$prediction!=hold.out.y))
+```
+
+

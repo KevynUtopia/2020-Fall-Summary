@@ -1,0 +1,736 @@
+---
+title: "Math4432_assignment1"
+author: "Kevyn"
+date: "2020/10/15"
+output:
+  html_document:
+    df_print: paged
+---
+
+This is MATH4432 assignment1, coding section.
+ZHANG Weiwen
+20583632
+wzhangbu@connect.ust.hk
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Exercises from Textbooks:
+
+------------------------------------------------------------------------------
+Exercise 2.8:
+(a):
+```{r}
+college <- read.csv("College.csv", stringsAsFactors=TRUE)
+```
+
+(b)
+```{r}
+
+college = college[,-1]#eliminate first column which is universities' names
+fix(college)
+```
+
+
+(c):
+i.
+```{r}
+summary(college)
+```
+ii.
+```{r}
+pairs(college[,1:10])
+```
+iii.
+```{r}
+plot(college$Private, college$Outstate, xlab = "Private", ylab = "Outstate")
+```
+iv.
+Ans: 78 elites
+```{r}
+Elite=rep("No",nrow(college))
+Elite[college$Top10perc >50]="Yes"
+Elite=as.factor(Elite)
+college=data.frame(college, Elite)
+summary(college$Elite)
+#78 elites
+plot(college$Elite, college$Outstate, xlab = "Elite", ylab = "Outstate")
+```
+v.
+```{r}
+par(mfrow = c(3,2))
+hist(college$Apps, breaks=150, xlim=c(0,18000), main="Apps")
+hist(college$Accept, breaks=100, xlim=c(0,15000), main="Accept")
+hist(college$Enroll, breaks=50, xlim=c(0,4000), main="Enroll")
+hist(college$Top10perc, breaks=50, xlim=c(0,100), main="Top10perc")
+hist(college$PhD, breaks=50, xlim=c(0,100), main="PhD")
+hist(college$Grad.Rate, breaks=50, xlim=c(0,120), main="Grad.Rate")
+```
+vi.
+Summary:
+Private colleges cost more in out-of-state tuition overall. And Elite colleges cost more in it as well. As for elite colleges, they hold more faculties with PhD, which shows stronger academic ability. Also noticed that Elite colleges has more full-time undergraduate students but lower Student/Faculty ratio. Another point is that elite colleges spend more instructional expenditure per student.
+```{r}
+par(mfrow = c(2,2))
+plot(college$Elite, college$PhD, xlab = "Elite", ylab = "PhD")
+plot(college$Elite, college$F.Undergrad, ylim=c(0,10000), xlab = "Elite", ylab = "F.Undergrad")
+plot(college$Elite, college$S.F.Ratio, ylim=c(0,30), xlab = "Elite", ylab = "S.F.Ratio")
+plot(college$Elite, college$Expend, ylim=c(5000,30000), xlab = "Elite", ylab = "Expend")
+```
+
+
+-----------------------------------------------------------------------------
+Exercise 2.10:
+(a)
+Ans: There are 506 rows and 14 columns.Rows are 506 different house cases in Boston. And columns are 14 index showing conditions of each case.
+
+(14 indexes: refered from resource of dataset
+CRIM - per capita crime rate by town
+ZN - proportion of residential land zoned for lots over 25,000 sq.ft.
+INDUS - proportion of non-retail business acres per town.
+CHAS - Charles River dummy variable (1 if tract bounds river; 0 otherwise)
+NOX - nitric oxides concentration (parts per 10 million)
+RM - average number of rooms per dwelling
+AGE - proportion of owner-occupied units built prior to 1940
+DIS - weighted distances to five Boston employment centres
+RAD - index of accessibility to radial highways
+TAX - full-value property-tax rate per $10,000
+PTRATIO - pupil-teacher ratio by town
+B - 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town
+LSTAT - % lower status of the population
+MEDV - Median value of owner-occupied homes in $1000's)
+
+```{r}
+library(MASS)
+Boston
+?Boston
+```
+
+(b)
+We figure out that, the higher air pollution or crime rate, the lower house price. We also notice that high crime cases are mostly located in region where air polltion is high.
+```{r}
+pairs(~crim+nox+ptratio+medv, data = Boston)#we only focus on particular indexes
+pairs(Boston)#a global comparison
+```
+
+(c)
+Ans: There seems no clear linear relationship between other predictors and crime rate. But we may figure out that, generally, higher NOX and Age or lower Dis and Medv can infere higher crime  rate.
+```{r}
+par(mfrow = c(3,5))
+plot(Boston$zn, Boston$crim, xlab = "ZN", ylab = "Crime")
+plot(Boston$indus, Boston$crim, xlab = "indus", ylab = "Crime")
+plot(Boston$chas, Boston$crim, xlab = "chas", ylab = "Crime")
+plot(Boston$nox, Boston$crim, xlab = "nox", ylab = "Crime")
+plot(Boston$rm, Boston$crim, xlab = "rm", ylab = "Crime")
+plot(Boston$age, Boston$crim, xlab = "age", ylab = "Crime")
+plot(Boston$dis, Boston$crim, xlab = "dis", ylab = "Crime")
+plot(Boston$rad, Boston$crim, xlab = "rad", ylab = "Crime")
+plot(Boston$tax, Boston$crim, xlab = "tax", ylab = "Crime")
+plot(Boston$ptratio, Boston$crim, xlab = "ptratio", ylab = "Crime")
+plot(Boston$black, Boston$crim, xlab = "black", ylab = "Crime")
+plot(Boston$lstat, Boston$crim, xlab = "lstat", ylab = "Crime")
+plot(Boston$medv, Boston$crim, xlab = "medv", ylab = "Crime")
+
+
+```
+
+(d)
+Crime and Tax Rate: Yes: There are clearly some extreme suburbs
+Pupil-teacher ratio: No: No clear evidence indicates any suburbs that significantly higher than oghter regions
+```{r}
+x <- c(1: length(Boston[,1]))
+plot(x, Boston$crim,col = 1) #black--crime
+par(new=T)
+plot(x, Boston$tax,col = 2) #red--Tax rate
+par(new=T)
+plot(x, Boston$ptratio,col = 4) #blue--pupil-teacher ratio
+
+
+```
+
+(e)
+Ans: 35 towns
+```{r}
+table(Boston$chas)
+```
+
+(f)
+Ans: 19.05
+```{r}
+median(Boston$ptratio)
+```
+
+(g)
+Two suburbs satisfy the requirement: 399th and 406th. 
+Other predictor are shown here:
+Comparing to overall level, 
+their "crime rates", "ages", "rad", "tax", "lastat" are very high,
+"nox", "ptratio", "number of blacks", "indus"  are relatively high,
+"rm", "dis" relatvely are low
+and "zn", are very low.
+As for "chas", no distinction with most cases--not bounded.
+
+```{r}
+Target <- Boston[Boston$medv == min(Boston$medv),]
+Target
+summary(Boston)
+```
+
+(h)
+Ans: 64 and 13 respectively
+
+For those more than 8 dwellings, they are generally with lower crime rates and lstat, higher zn, but cost very high in medv. And they also bound the Charles river more often.
+```{r}
+length(Boston[Boston$rm >7,][,1])
+dew <- Boston[Boston$rm >8,]
+length(dew[,1])
+
+sapply(dew, mean)
+summary(Boston)
+```
+
+
+------------------------------------------------------------------------------
+Exercise 3.8:
+(a)
+Ans: 
+i. Yes
+ii. linear relationship is strong as p-value is significantly small even close to 0
+iii. negative
+iv. confidence interval is (23.97308, 24.96108)
+    prediction interval is (14.8094, 34.12476)
+```{r}
+Auto = read.table("Auto.data", header = T, na.strings = "?", stringsAsFactors=TRUE)
+Auto = na.omit(Auto)
+lm.fit <- lm(mpg~horsepower, data = Auto)
+summary(lm.fit)
+predict(lm.fit, data.frame(horsepower = 98), interval = "confidence")
+predict(lm.fit, data.frame(horsepower = 98), interval = "prediction")
+```
+
+(b)
+```{r}
+plot(Auto$horsepower, Auto$mpg)
+abline(lm.fit)
+```
+
+(c)
+Residual vs Fitted shows a nonlinear relationship.
+```{r}
+par(mfrow = c(2,2))
+plot(lm.fit)
+```
+
+-------------------------------------------------------------------------------
+Exercise 3.9:
+(a)
+```{r}
+pairs(Auto)
+```
+
+(b)
+```{r}
+cor(Auto[ ,-9])
+```
+
+(c)
+i. As p-value of F-test is significantly small, we reject null hypothesis s.t. there do exist relationship between responser and predictors.
+ii. displacement, weight, year and origin.
+iii. it suggests the performance of cars in mpg is increasing throughout the years.
+```{r}
+mlm.fit <- lm(mpg~.-name, data = Auto)
+summary(mlm.fit)
+```
+
+(d)
+Residual vs Fitted shows a nonlinear relationship.
+Some outlier are shown for example 323,7 327 etc.
+And 14 shows high leverage.
+```{r}
+par(mfrow = c(2,2))
+plot(mlm.fit)
+```
+
+(e)
+ "displacement:year"
+ "acceleration:year"
+ "acceleration:origin"
+shows to be statistically significant.
+```{r}
+summary(lm(mpg~.*., data = Auto[, -9]))
+```
+
+(f)
+$log(displacement)$ show better fitness to the linear model compare with ever before 
+$\sqrt{weight}$ and $weight^{2}$ performance as good as before
+but $\sqrt{displacement}$ show worse fitness
+```{r}
+mlm.fit1 <- lm(mpg~log(displacement)+weight+year+origin, data=Auto)
+mlm.fit2 <- lm(mpg~displacement+sqrt(weight)+year+origin, data=Auto)
+mlm.fit3 <- lm(mpg~displacement+weight^2+year+origin, data=Auto)
+mlm.fit4 <- lm(mpg~sqrt(displacement)+weight^2+year+origin, data=Auto)
+summary(mlm.fit1)
+summary(mlm.fit2)
+summary(mlm.fit3)
+summary(mlm.fit4)
+```
+
+------------------------------------------------------------------------------
+Exercise 4.10:
+(a)
+Noticed that Year and Volume are positively related.
+```{r}
+load("Weekly.rda")
+write.csv(Weekly,"C:/Users/Kevyn/Documents/4432/weekly.csv")
+weekly <- read.csv("weekly.csv", stringsAsFactors=TRUE)
+weekly <- weekly[,-1]
+summary(weekly)
+pairs(weekly)
+```
+
+(b)
+Lag2 seems significantly associated with Direction.
+```{r}
+glm.fits = glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume, data = weekly, family = binomial)
+summary(glm.fits)
+```
+
+(C)
+Logistic may predict the direction in wrong way, and the overall fraction is 0.56
+And particular accuracy:
+"Down": 52.9%
+"UP": 56.4%
+So, it predicts more accuracy in "UP" cases.
+
+```{r}
+glm.probs = predict(glm.fits, Weekly, type="response")
+glm.pred=rep("Down",length(glm.probs))
+glm.pred[glm.probs>.5] = "Up"
+table(glm.pred, weekly$Direction)
+mean(glm.pred == weekly$Direction)
+```
+```{r}
+54/(54+48)
+557/(557+430)
+```
+
+(d)
+accuracy is 0.625
+```{r}
+train = subset(weekly, Year>=1990 & Year<=2008)
+test = subset(weekly, Year>=2009 & Year<=2010)
+glm.fit1 = glm(Direction~Lag2, data=train, family=binomial)
+glm.probs1 = predict(glm.fit1, test, type="response")
+glm.pred1=rep("Down",length(glm.probs1))
+glm.pred1[glm.probs1>.5] = "Up"
+table(glm.pred1, test$Direction)
+mean(glm.pred1 == test$Direction)
+```
+
+(e)
+accuracy is 0.625
+```{r}
+library(MASS)
+lda.fits = lda(Direction~Lag2 ,data=train)
+lda.pred = predict(lda.fits, test, type="response")
+
+lda.class=lda.pred$class
+table(lda.class, test$Direction)
+mean(lda.class == test$Direction)
+```
+
+(f)
+accuracy is 0.59
+```{r}
+qda.fits = qda(Direction~Lag2 ,data=train)
+qda.class = predict(qda.fits, test)$class
+
+table(qda.class, test$Direction)
+mean(qda.class == test$Direction)
+```
+
+(g)
+accuracy is 0.5
+```{r}
+library(class)
+train.X = as.matrix(train$Lag2)
+test.X = as.matrix(test$Lag2)
+train.Direction = as.matrix(train$Direction)
+set.seed(1)
+knn.pred=knn(train.X,test.X,train.Direction,k=1)
+table(knn.pred, test$Direction)
+mean(knn.pred ==  test$Direction)
+```
+
+(h)
+Logistic Regression and LDA do well with about 62.5% accuracy.
+
+(i)
+I tried KNN with K = 5, 10, 50, 100, 250
+glm: Direction~Lag1, Direction~Lag2+Lag3
+lda: Direction~Lag1, Direction~Lag2+Lag3
+qda: Direction~Lag1, Direction~Lag2+Lag3
+Overall, "lda: Direction~Lag2+Lag3" is as good as previous glm and lda, which reaches 62.5%
+
+
+K=5
+```{r}
+train.X = as.matrix(train$Lag2)
+test.X = as.matrix(test$Lag2)
+train.Direction = as.matrix(train$Direction)
+set.seed(1)
+knn.pred=knn(train.X,test.X,train.Direction,k=5)
+table(knn.pred, test$Direction)
+mean(knn.pred ==  test$Direction)
+```
+K=10
+```{r}
+train.X = as.matrix(train$Lag2)
+test.X = as.matrix(test$Lag2)
+train.Direction = as.matrix(train$Direction)
+set.seed(1)
+knn.pred=knn(train.X,test.X,train.Direction,k=10)
+table(knn.pred, test$Direction)
+mean(knn.pred ==  test$Direction)
+```
+K=50
+```{r}
+train.X = as.matrix(train$Lag2)
+test.X = as.matrix(test$Lag2)
+train.Direction = as.matrix(train$Direction)
+set.seed(1)
+knn.pred=knn(train.X,test.X,train.Direction,k=50)
+table(knn.pred, test$Direction)
+mean(knn.pred ==  test$Direction)
+```
+K=100
+```{r}
+train.X = as.matrix(train$Lag2)
+test.X = as.matrix(test$Lag2)
+train.Direction = as.matrix(train$Direction)
+set.seed(1)
+knn.pred=knn(train.X,test.X,train.Direction,k=100)
+table(knn.pred, test$Direction)
+mean(knn.pred ==  test$Direction)
+```
+K=250
+```{r}
+train.X = as.matrix(train$Lag2)
+test.X = as.matrix(test$Lag2)
+train.Direction = as.matrix(train$Direction)
+set.seed(1)
+knn.pred=knn(train.X,test.X,train.Direction,k=250)
+table(knn.pred, test$Direction)
+mean(knn.pred ==  test$Direction)
+```
+```{r}
+glm.fit1 = glm(Direction~Lag1, data=train, family=binomial)
+glm.probs1 = predict(glm.fit1, test, type="response")
+glm.pred1=rep("Down",length(glm.probs1))
+glm.pred1[glm.probs1>.5] = "Up"
+table(glm.pred1, test$Direction)
+mean(glm.pred1 == test$Direction)
+```
+
+```{r}
+lda.fits = lda(Direction~Lag1 ,data=train)
+lda.pred = predict(lda.fits, test, type="response")
+
+lda.class=lda.pred$class
+table(lda.class, test$Direction)
+mean(lda.class == test$Direction)
+```
+
+```{r}
+qda.fits = qda(Direction~Lag1 ,data=train)
+qda.class = predict(qda.fits, test)$class
+
+table(qda.class, test$Direction)
+mean(qda.class == test$Direction)
+```
+```{r}
+glm.fit1 = glm(Direction~Lag2+Lag3, data=train, family=binomial)
+glm.probs1 = predict(glm.fit1, test, type="response")
+glm.pred1=rep("Down",length(glm.probs1))
+glm.pred1[glm.probs1>.5] = "Up"
+table(glm.pred1, test$Direction)
+mean(glm.pred1 == test$Direction)
+```
+
+```{r}
+lda.fits = lda(Direction~Lag2+Lag3 ,data=train)
+lda.pred = predict(lda.fits, test, type="response")
+
+lda.class=lda.pred$class
+table(lda.class, test$Direction)
+mean(lda.class == test$Direction)
+```
+
+```{r}
+qda.fits = qda(Direction~Lag2+Lag3,data=train)
+qda.class = predict(qda.fits, test)$class
+
+table(qda.class, test$Direction)
+mean(qda.class == test$Direction)
+```
+
+-----------------------------------------------------------------------------
+Exercise 4.11:
+(a)
+```{r}
+m = median(Auto$mpg)
+Auto01 <- data.frame(Auto)
+Auto01$mpg01 = 1*(Auto01$mpg > m)
+```
+
+(b)
+Cylinders, acceleration, year may be useful
+```{r}
+pairs(Auto01)
+par(mfrow = c(2,3))
+boxplot(Auto01$mpg01, Auto01$cylinders)
+boxplot(Auto01$mpg01, Auto01$displacement)
+boxplot(Auto01$mpg01, Auto01$horsepower)
+boxplot(Auto01$mpg01, Auto01$weight)
+boxplot(Auto01$mpg01, Auto01$acceleration)
+boxplot(Auto01$mpg01, Auto01$year)
+```
+
+(c)
+```{r}
+set.seed(1)
+l = length(Auto01[,1])
+index = sample(1:l, floor(l*0.8), replace=F) # 70% train, 30% test
+trainset = Auto01[index,]
+testset = Auto01[-index,]
+```
+
+(d)
+Test error is 6.33%
+```{r}
+library(MASS)
+lda.fits = lda(mpg01~cylinders+acceleration+year ,data=trainset)
+lda.pred = predict(lda.fits, testset, type="response")
+
+lda.class=lda.pred$class
+table(lda.class, testset$mpg01)
+mean(lda.class != testset$mpg01)
+```
+
+(e)
+Test error is 6.33%
+```{r}
+qda.fits = qda(mpg01~cylinders+acceleration+year ,data=trainset)
+qda.class = predict(qda.fits, testset)$class
+
+table(qda.class, testset$mpg01)
+mean(qda.class != testset$mpg01)
+```
+
+(f)
+Test error is 6.33%
+```{r}
+glm.fits = glm(mpg01~cylinders+acceleration+year, data=trainset, family=binomial)
+glm.probs = predict(glm.fits, testset, type="response")
+glm.pred=rep(0,length(glm.probs))
+glm.pred[glm.probs>.5] = 1
+table(glm.pred, testset$mpg01)
+mean(glm.pred != testset$mpg01)
+```
+(g)
+Test error is around 6.33%~7.59%
+KNN works best on K=15 which reaches 6.33%
+```{r}
+library(class)
+train.X = cbind(trainset$cylinders,trainset$acceleration,trainset$year)
+test.X = cbind(testset$cylinders,testset$acceleration,testset$year)
+train.mpg01 = as.matrix(trainset$mpg01)
+set.seed(1)
+knn.pred=knn(train.X,test.X,train.mpg01,k=2)
+table(knn.pred, testset$mpg01)
+mean(knn.pred !=  testset$mpg01)
+```
+```{r}
+library(class)
+train.X = cbind(trainset$cylinders,trainset$acceleration,trainset$year)
+test.X = cbind(testset$cylinders,testset$acceleration,testset$year)
+train.mpg01 = as.matrix(trainset$mpg01)
+set.seed(1)
+knn.pred=knn(train.X,test.X,train.mpg01,k=5)
+table(knn.pred, testset$mpg01)
+mean(knn.pred !=  testset$mpg01)
+```
+```{r}
+library(class)
+train.X = cbind(trainset$cylinders,trainset$acceleration,trainset$year)
+test.X = cbind(testset$cylinders,testset$acceleration,testset$year)
+train.mpg01 = as.matrix(trainset$mpg01)
+set.seed(1)
+knn.pred=knn(train.X,test.X,train.mpg01,k=15)
+table(knn.pred, testset$mpg01)
+mean(knn.pred !=  testset$mpg01)
+```
+```{r}
+library(class)
+train.X = cbind(trainset$cylinders,trainset$acceleration,trainset$year)
+test.X = cbind(testset$cylinders,testset$acceleration,testset$year)
+train.mpg01 = as.matrix(trainset$mpg01)
+set.seed(1)
+knn.pred=knn(train.X,test.X,train.mpg01,k=50)
+table(knn.pred, testset$mpg01)
+mean(knn.pred !=  testset$mpg01)
+```
+```{r}
+library(class)
+train.X = cbind(trainset$cylinders,trainset$acceleration,trainset$year)
+test.X = cbind(testset$cylinders,testset$acceleration,testset$year)
+train.mpg01 = as.matrix(trainset$mpg01)
+set.seed(1)
+knn.pred=knn(train.X,test.X,train.mpg01,k=100)
+table(knn.pred, testset$mpg01)
+mean(knn.pred !=  testset$mpg01)
+```
+```{r}
+library(class)
+train.X = cbind(trainset$cylinders,trainset$acceleration,trainset$year)
+test.X = cbind(testset$cylinders,testset$acceleration,testset$year)
+train.mpg01 = as.matrix(trainset$mpg01)
+set.seed(1)
+knn.pred=knn(train.X,test.X,train.mpg01,k=250)
+table(knn.pred, testset$mpg01)
+mean(knn.pred !=  testset$mpg01)
+```
+
+------------------------------------------------------------------------------
+additional coding:
+
+Consider a gound truth modle
+y=sin(2πx1).
+ 
+Generate  n=50  training samples with random noise  N(0,0.5)  and testing data with sample size  ntest=500 . Suppose there are  p  predictors  {xi}pi=1 , where  {xj:j≠1}  is a set of noisy predictors that are unrelated to y. Apply linear regression and knn regression to predict y in the testing set and analyze the bias-variance trade-off for both models. Vary  p∈{1,2,3,4,10,20}  and  k=1,...,9  for knn. Visualize the patterns of bias-variance trade-off.
+
+```{r, warning=FALSE}
+library(FNN)
+library(ggplot2)
+rm(list=ls())
+
+n <- 50
+nt <- 500
+nrep <- 100
+p <- 20
+puse <- c(1,2,3,4,10,20)
+k <- c(1:9)
+
+sigma <- 0.025
+
+X <- matrix(runif(n*p,-1,1),n,p)
+Xt <- matrix(runif(nt*p,-1,1),nt,p)
+y0 <- sin(2*pi*X[,1])
+yt <- sin(2*pi*Xt[,1])
+
+out_knn <- data.frame()
+out_lm <- data.frame()
+
+for(i in 1:length(puse)){
+  yhat_lm <- matrix(0,nt,nrep)
+  yhat_knn <- replicate(length(k),matrix(0,nt,nrep))
+  for(l in 1:nrep){
+    y <- y0 + rnorm(n,0,sigma)
+    
+######### DO: fit linear regression using lm funciton, assign predicted value to yhat_lm[,l] #########
+    x<-X[,1:puse[i]]
+    lm.fits <- lm(y~x)
+    yhat_lm[,l] <- predict(lm.fits, data.frame(x = Xt[,1:puse[i]]), type="response")# predicted value by lm
+      
+    
+    for(j in 1:length(k)){
+      ######### DO: fit knn using knn.reg funciton, assign predicted value to yhat_knn[,l,j] #########
+
+      yhat_knn[,l,j]<- knn.reg(data.frame(X[,1:puse[i]]), data.frame(Xt[,1:puse[i]]), y=y, k=k[j])$pred# predicted value by knn.reg
+        
+    }
+    
+    cat(i,"-th p, ",l,"-th repitition finished. \n")
+  }
+  
+  ######### DO: compute bias and variance of linear regression #########
+  # compute mean of predicted values
+    
+  ybar_lm <-  rowMeans(yhat_lm)                # E(f^hat)
+  # compute bias^2
+    
+  biasSQ_lm <- mean((yt-ybar_lm)^2)     # E[ (f - E(f^hat))^2 ]
+    
+  # compute variance
+    
+  variance_lm <- mean((yhat_lm-ybar_lm)^2)   # E[ (E(f^hat) - f^hat)^2 ]
+    
+  # compute total MSE
+    
+  err_lm <- biasSQ_lm + variance_lm + sigma
+  
+  out_lm <- rbind(out_lm,data.frame(error=biasSQ_lm,component="squared-bias",p=paste0("p=",puse[i])))
+  out_lm <- rbind(out_lm,data.frame(error=variance_lm,component="variance",p=paste0("p=",puse[i])))
+  out_lm <- rbind(out_lm,data.frame(error=err_lm,component="MSE",p=paste0("p=",puse[i])))
+  
+  
+  ######### DO: compute bias and variance of knn regression #########
+  # compute mean of predicted values
+    
+  ybar_knn <-   apply(yhat_knn, c(1,3), mean)            # E(f^hat)
+    
+  # compute bias^2
+    
+  biasSQ_knn <-  apply((yt-ybar_knn)^2, 2, mean)     # E[ (f - E(f^hat))^2 ]
+    
+  # compute variance
+  temp = rep(0,9)
+  for(t in 1:length(k)){
+    temp[t] = mean((yhat_knn[,,t]-ybar_knn[,t])^2)
+  }
+  variance_knn <-  temp # E[ (E(f^hat) - f^hat)^2 ]
+    
+  # compute total MSE
+    
+  err_knn <- biasSQ_knn + variance_knn + sigma
+  
+  out_knn <- rbind(out_knn,data.frame(error=biasSQ_knn,component="squared-bias",K=1/k,p=paste0("p=",puse[i])))
+  out_knn<- rbind(out_knn,data.frame(error=variance_knn,component="variance",K=1/k,p=paste0("p=",puse[i])))
+  out_knn<- rbind(out_knn,data.frame(error=err_knn,component="MSE",K=1/k,p=paste0("p=",puse[i])))
+}
+```
+
+visualization:
+```{r, warning=FALSE}
+
+df <- data.frame(out_lm, stringsAsFactors = FALSE)
+
+df$puse <- as.numeric(gsub('p=', '', df$p))
+df <- df[order(df$puse), ]
+ggplot(df, aes(x=puse, y=error, group=component, color = component))+geom_line()
+```
+```{r, warning=FALSE}
+df <- data.frame(out_knn, stringsAsFactors = FALSE)
+
+df$puse <- as.numeric(gsub('p=', '', df$p))
+df <- df[order(df$puse), ]
+
+ggplot(df, aes(x=puse, y=error,  group=component, color = component))+geom_line(aes(group =K))
+
+ggplot(df, aes(x=K, y=error,  group=component, color = component))+geom_line(aes(group =puse))
+
+ggplot(df, aes(x=K, y=error,  group=component, color = component))+geom_line()
+
+ggplot(df, aes(x=puse, y=error,  group=component, color = component))+geom_line()
+
+ggplot(df, aes(x=K, y=error,  group=component, color = component))+geom_point()
+
+ggplot(df, aes(x=puse, y=error,  group=component, color = component))+geom_point()
+```
+
+
+
+
+
+
+
+
