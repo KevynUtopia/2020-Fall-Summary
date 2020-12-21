@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   t="1605272233505"
+   class="icon"
+   viewBox="0 0 256 2764.8"
+   version="1.1"
+   p-id="4082"
+   width="50"
+   height="540"
+   id="svg12"
+   sodipodi:docname="梯子 (1).svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <metadata
+     id="metadata16">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
+     id="namedview14"
+     showgrid="false"
+     inkscape:zoom="0.71064232"
+     inkscape:cx="-56.553705"
+     inkscape:cy="155.20621"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg12"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <defs
+     id="defs4">
+    <style
+       type="text/css"
+       id="style2" />
+  </defs>
+  <path
+     d="m 0,0 m 7.36498,0 v 0 q 7.36496,0 7.36496,23.41344 V 2741.3865 q 0,23.4135 -7.36496,23.4135 v 0 Q 0,2764.8 0,2741.3865 V 23.41344 Q 0,0 7.36498,0 Z"
+     fill="#231815"
+     p-id="4083"
+     id="path6"
+     style="stroke-width:1.51707" />
+  <path
+     d="m 241.27006,0 m 7.36498,0 V 0 Q 256,0 256,23.41344 V 2741.3865 q 0,23.4135 -7.36496,23.4135 v 0 q -7.36498,0 -7.36498,-23.4135 V 23.41344 Q 241.27006,0 248.63504,0 Z"
+     fill="#231815"
+     p-id="4084"
+     id="path8"
+     style="stroke-width:1.51707" />
+  <path
+     d="m 6.33546,219.12965 h 248.33409 v 52.718 H 6.33546 Z m 0,392.74157 h 248.33409 v 52.718 H 6.33546 Z m 0,433.02278 h 248.33409 v 52.718 H 6.33546 Z m 0,422.9524 h 248.33409 v 52.718 H 6.33546 Z m 0,422.9525 h 248.33409 v 52.718 H 6.33546 Z m 0,422.9525 h 248.33409 v 52.718 H 6.33546 Z"
+     fill="#231815"
+     p-id="4085"
+     id="path10"
+     style="stroke-width:1.51707" />
+</svg>

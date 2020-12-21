@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Login Page</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script type="text/javascript">
+        function clearMessage() {
+            try {
+                var messages = xmlDoc.getElementsByTagName("username");
+                
+                console.log(name);
+                if (name != "") {
+                    window.parent.frames["message"].location.reload();
+                }
+            } catch (e) { }
+        }
+        
+        //username input checking
+       function checkInput(e) {
+            // username cannot be empty
+            var nameInput = document.getElementById("name");
+            var imgInput = document.getElementById("picture");
+            var nameVal = nameInput.value.trim();
+            if (nameVal == "") {
+                alert("Please enter a name!");
+                e.preventDefault();
+            }
+
+            // username cannot contain illeagl character
+            var illChars = "':;<>[]{}!@#$%^&*-+=";
+            for (var i = 0; i < illChars.length; i++) {
+                if (nameVal.includes(illChars.charAt(i))) {   
+                    alert("Invalid user name, try another one! Please don't use space and the following characters.  ':;<>[]{}!@#$%^&*-+=");
+                    e.preventDefault();
+                }
+            }
+            if(!imgInput.value){
+                alert("Please choose a pictuere!");
+                e.preventDefault();
+            }
+        }
+        
+        </script>
+    </head>
+
+    <body onload="clearMessage()">
+        <form method="post" action="login.php" onsubmit="javascript:checkInput(event)" enctype="multipart/form-data">
+            <table border="0" cellpadding="5" cellspacing="0">
+                <tr>
+                    <td>Please enter your user name:</td>
+                    <td><input class="text" name="name" id="name" type="text" size="20" maxlength="10" /></td>
+                </tr>
+                <!-- <tr>
+                    <td align="left">Please upload a picture:</td>
+                    <td><input name="picture" id="picture" type="file" size="10" /></td>
+                </tr> -->
+                <tr>
+                    <td>Please enter your user picture:</td>
+                    <td><input class="text" name="picture" id="picture" type="file" size="20" maxlength="10" /></td>
+                </tr>
+                <tr align="center">
+                    <td colspan="2"><input class="button" type="submit" value="Go!" style="width: 150px" name="submit"/></td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

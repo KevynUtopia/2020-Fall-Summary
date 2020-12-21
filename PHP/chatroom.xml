@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<chatroom>
+  <users>
+  <user name="Alice" log="Off" imgid="img/5fc93f577dccf5.38821317.jpg"/><user name="Bob" log="Off" imgid="img/5fc93f6d8d2955.68926567.jpg"/><user name="Alice" log="On" imgid="img/5fc9401b788971.61672264.jpg"/><user name="Bob" log="On" imgid="img/5fc9402720d2c2.83951432.jpg"/><user name="Tom" log="Off" imgid="img/5fc94106017793.00558944.jpg"/><user name="Amy" log="Off" imgid="img/5fc9b26acf69d6.95242084.jpg"/><user name="Kevyn" log="Off" imgid="img/5fc9b28bca6475.48854244.jpg"/><user name="Amy" log="On" imgid="img/5fc9b40573fe44.36808521.jpg"/><user name="Amy" log="Off" imgid="img/5fcb378cb8b7c3.70644062.jpg"/><user name="Amy" log="Off" imgid="img/5fcb38faa741d0.65305517.jpg"/><user name="Tom" log="On" imgid="img/5fcb390a2f62f1.75521224.jpg"/><user name="Amy" log="Off" imgid="img/5fcb3ac39c4f29.97675410.jpg"/><user name="Tom" log="Off" imgid="img/5fcb3afd832ee2.42206158.jpg"/><user name="ass" log="On" imgid="img/5fcb3b11ac4a27.53685575.jpg"/><user name="Amy" log="Off" imgid="img/5fcb3b2289a641.21349602.jpg"/></users>
+
+  <messages>
+  <message name="Alice" color="magenta">Hello</message><message name="Bob" color="black">Hi</message><message name="Amy" color="black">http://www.baidu.com Try this</message></messages>
+  
+</chatroom>

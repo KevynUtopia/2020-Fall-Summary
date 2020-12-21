@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   t="1605332348582"
+   class="icon"
+   viewBox="0 0 102.4 102.4"
+   version="1.1"
+   p-id="10153"
+   width="20"
+   height="20"
+   id="svg10"
+   sodipodi:docname="墙砖.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <metadata
+     id="metadata14">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
+     id="namedview12"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="4.02"
+     inkscape:cx="100"
+     inkscape:cy="100"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg10" />
+  <defs
+     id="defs4">
+    <style
+       type="text/css"
+       id="style2" />
+  </defs>
+  <path
+     d="m 32.36,6.4 h 6.4 v 21.3 h -6.4 z m 37.68,27.73 h 6.4 v 27.73 h -6.4 z"
+     fill="#13227a"
+     p-id="10154"
+     id="path6"
+     style="stroke-width:0.1" />
+  <path
+     d="M 0,0 V 102.4 H 102.4 V 0 Z M 6.4,6.4 H 96 V 27.73 H 6.4 Z M 96,34.13 V 61.86 H 6.4 V 34.13 Z M 6.4,68.27 H 32.36 V 96 H 6.4 Z M 38.76,96 V 68.27 H 96 V 96 Z"
+     fill="#13227a"
+     p-id="10155"
+     id="path8"
+     style="stroke-width:0.1" />
+</svg>
