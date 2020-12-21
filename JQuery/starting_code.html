@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Autocomplete - Categories</title>
+  <link rel="stylesheet" href="jquery-ui.css">
+  <script src="jquery-1.11.3.js"></script>
+  <script src="jquery-ui.js"></script>
+  <link rel="stylesheet" href="style.css">
+ 
+	
+	<script>
+
+	</script>
+
+  	<script>
+	//collect a series of tags
+	$(function(){
+		var availableTags = [
+		"actionscript",
+		"anders",
+		"applescript",
+		"asp",
+		"basic",
+		"c",
+		"c++",
+		"clojure",
+		"cobol",
+		"coldfusion",
+		"erlang",
+		"fortran",
+		"groovy",
+		"haskell",
+		"java",
+		"javascript",
+		"lisp",
+		"perl",
+		"php",
+		"python",
+		"ruby",
+		"scala",
+		"scheme",
+		"wolawola",
+		"yeyeye",
+		"freeride",
+		"football",
+		"basketball",
+		"yoga",
+		"kevyn" ,
+		"amy"
+	];
+	//label these tags into some categpries
+	  	var data = [
+		{ label: "wolawola", category: ""},
+		{ label: "yeyeye", category: ""},
+		{ label: "freeride", category: ""},	
+	  	{ label: "actionscript", category: "products"},
+		{ label: "applescript", category: "products"},
+		{ label: "asp", category: "products"},
+		{ label: "basic", category: "products"},
+		{ label: "c", category: "products"},
+		{ label: "c++", category: "products"},
+		{ label: "clojure", category: "products"},
+		{ label: "cobol", category: "products"},
+		{ label: "coldfusion", category: "products"},
+		{ label: "erlang", category: "products"},
+		{ label: "fortran", category: "products"},
+		{ label: "groovy", category: "products"},
+		{ label: "haskell", category: "peoproductsple"},
+		{ label: "java", category: "products"},
+		{ label: "javascript", category: "products"},
+		{ label: "lisp", category: "products"},
+		{ label: "perl", category: "products"},
+		{ label: "php", category: "products"},
+		{ label: "python", category: "products"},
+		{ label: "ruby", category: "products"},
+		{ label: "scala", category: "products"},
+		{ label: "scheme", category: "products"},
+		{ label: "football", category: "sport"},
+		{ label: "basketball", category: "sport"},
+		{ label: "yoga", category: "sport"},
+		{ label: "anders", category: "people"},
+		{ label: "amy", category: "people"},
+		{ label: "kevyn", category: "people"}
+	  	];
+	//prepare functions to realize muti-value input
+	  	function split(val){
+	  		return val.split(/,\s*/);
+	  	}	
+	  	function extractLast(term){
+			return split(term).pop();
+	  	}
+
+	  	$("#search")
+	  	.bind("keydown", function (event){
+		 	 if(event.keyCode === $.ui.TAB && $(this).catcomplete("instance").menu.active){
+			  	event.preventDefault();
+			}
+	  	})
+	  	.catcomplete({
+		delay: 0,
+		source: function(request, response){
+				response($.ui.autocomplete.filter(
+					data, extractLast( request.term))
+				);
+			},
+		minLength: 0,
+		focus: function(){
+			return false;
+		},
+		select: function(event, ui){
+			var terms = split(this.value);
+			terms.pop();
+			terms.push(ui.item.value);
+			terms.push("");
+			this.value = terms.join(", ");
+			return false;
+		}
+	  });
+
+
+	});
+ 	</script>
+
+  	<style>
+    .ui-autocomplete{
+	  font-weight: bold;
+      max-height: 100px;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    * html .ui-autocomplete{
+	  font-weight: bold;
+      height: 100px;
+    }
+  	</style>
+  	<style>
+      .ui-autocomplete-category{
+        font-weight: bold;
+        padding: .2em .4em;
+        margin: .8em 0 .2em;
+        line-height: 1.5;
+		color:rgb(255, 0, 0);
+      }
+	  .match-character {
+		font-weight:bold;
+		color:Blue;
+		}
+    </style>
+	<script>
+
+
+	$.widget("custom.catcomplete", $.ui.autocomplete, {
+		_create: function(){
+			this._super();
+			this.widget().menu("option", "items","> :not(.ui-autocomplete-category)");
+		},
+		//blue font of matched characters
+		_renderItem: function renderAutoCompleteMenuItem(ul, item) {
+			terms = this.term.split(',');
+			term = terms[terms.length - 1].trim();
+			var re = new RegExp(term, 'g') ;
+			var t = item.label.replace(re,"<span class='match-character'>" + term + "</span>");
+			return $( "<li></li>" )
+			.data( "item.autocomplete", item )
+			.append( "<a class='match-character'>" + t + "</a>" )
+			.appendTo( ul );
+		},
+		//red bold font for categories
+		_renderMenu: function (ul,items) {
+			var that = this,
+			currentCategory = "";
+			$.each( items, function( index, item){
+				var li;
+				if( item.category != currentCategory) {
+					ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>")
+					currentCategory = item.category;
+
+				}
+				li = that._renderItemData( ul, item );
+				if( item.category ){
+					li.attr( "aria-label", item.category + " : " + item.label );
+				}
+			});
+		}
+	});
+	</script>
+      
+</head>
+<body>
+ 
+
+
+<label for="search">Search: </label>
+<input id="search">
+ 
+</body>
+</html>
