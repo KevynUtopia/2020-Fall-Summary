@@ -1,1 +1,0 @@
-flag{window11isnotwindows11}
